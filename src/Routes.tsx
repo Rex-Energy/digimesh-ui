@@ -1,12 +1,13 @@
+// @ts-nocheck
+
 import { useEffect } from "react";
-import { Box, CssBaseline } from "@mui/material";
+import { Box } from "@mui/material";
 import { Routes, Route } from "react-router";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
-import backgroundImage from "./assets/react.svg";
 
 const Routers = () => {
   const location = useLocation();

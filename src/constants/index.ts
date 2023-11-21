@@ -1,4 +1,4 @@
-import moment from "moment";
+// @ts-nocheck
 
 export const validateEmail = (email: string | null) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

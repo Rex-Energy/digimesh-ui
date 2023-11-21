@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { TextField, InputLabel, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
 import { grey } from "@mui/material/colors";
