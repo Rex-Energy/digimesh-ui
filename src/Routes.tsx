@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
+import backgroundImage from "./assets/react.svg";
 
 const Routers = () => {
   const location = useLocation();
@@ -25,6 +26,9 @@ const Routers = () => {
           boxSizing: "border-box",
           padding: "2rem",
           margin: 0,
+          backgroundImage: "url(background.gif)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
       >
         <Routes>
