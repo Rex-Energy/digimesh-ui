@@ -14,7 +14,7 @@ import Section from "../../components/section";
 import { InputField } from "../../components/Inputfield";
 import { grey } from "@mui/material/colors";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function Login() {
@@ -23,6 +23,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const isValid = username && password;
   const [loginData, setLoginData] = useState(null);
+  const navigate = useNavigate();
   const isSmallDevice = useMediaQuery("(max-width: 899px)");
 
   return (
@@ -122,6 +123,7 @@ export default function Login() {
                   }}
                   disabled={!isValid}
                   onClick={() => {
+                    navigate("/dashboard");
                     setLoginData({
                       userName: username,
                       password: password,

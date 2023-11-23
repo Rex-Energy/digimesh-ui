@@ -1,5 +1,12 @@
+// @ts-nocheck
+
 import { Grid } from "@mui/material";
+import Layout from "./Layout";
 
 export default function Dashboard() {
-  return <Grid>Dashboard</Grid>;
+  return (
+    <Layout>
+      <Grid>Dashboard</Grid>
+    </Layout>
+  );
 }

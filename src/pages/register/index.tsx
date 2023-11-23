@@ -544,6 +544,7 @@ export default function Register() {
                   }}
                   disabled={!isValid}
                   onClick={() => {
+                    navigate("/dashboard");
                     setSignupValues({
                       firsName: fname ?? "",
                       lastName: lname ?? "",
