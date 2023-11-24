@@ -11,9 +11,12 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Grid,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
+import CustomTimeline from "./components/CustomTimeline";
 
 const drawerWidth = 240;
 
@@ -54,6 +57,25 @@ const Layout: React.FC = ({ children }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const settings = [
+    {
+      title: "Temprature",
+      submenu: [],
+    },
+    {
+      title: "Humidity",
+      submenu: [],
+    },
+    {
+      title: "Levels",
+      submenu: ["Level1", "Level2"],
+    },
+    {
+      title: "Wind",
+      submenu: [],
+    },
+  ];
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,66 +85,77 @@ const Layout: React.FC = ({ children }) => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="menu"
-            onClick={handleMenuOpen}
-            edge="start"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            {/* Menu items go here */}
-            <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-            <MenuItem onClick={handleMenuClose}>About</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Contact</MenuItem>
-          </Menu>
-          <Typography variant="h6" noWrap>
-            Your App Name
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
+    <Grid container>
+      <Grid
+        xs={12}
+        style={{
+          backgroundColor: "rgb(19,27,47)",
+          height: "10vh",
+          display: "flex",
+          padding: "0 30px",
+          alignItems: "center",
         }}
       >
-        {/* Sidebar content goes here */}
-        <Box p={2}>
-          <Typography variant="h6" style={{ color: "#fff" }}>
-            Sidebar
-          </Typography>
-        </Box>
-      </Drawer>
-      <main className={classes.content}>
-        <Container maxWidth="lg">{children}</Container>
-      </main>
-      <Box component="footer" className={classes.footer}>
-        <Typography variant="body2" align="center">
-          Your Footer Information
+        <Typography
+          style={{ fontSize: "24px", fontWeight: 600, color: "#FAFAFA" }}
+        >
+          Asplin Weather
         </Typography>
-      </Box>
-    </div>
+      </Grid>
+      <Grid
+        xs={2}
+        style={{
+          backgroundColor: "rgb(19,27,47)",
+          height: "80vh",
+          padding: "30px 10px 10px 10px",
+        }}
+      >
+        {settings?.map((setting) => {
+          return (
+            <>
+              <Grid xs={12} style={{ margin: "10px 0px" }}>
+                <Button
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  {setting?.title}
+                </Button>
+              </Grid>
+              {setting?.submenu?.map((tab) => {
+                return (
+                  <Grid
+                    xs={12}
+                    style={{ margin: "10px 0px", paddingLeft: "40px" }}
+                  >
+                    <Button
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      {tab}
+                    </Button>
+                  </Grid>
+                );
+              })}
+            </>
+          );
+        })}
+      </Grid>
+      <Grid xs={10} style={{ height: "80vh", padding: "2rem" }}>
+        {children}
+      </Grid>
+      <Grid
+        xs={12}
+        style={{ backgroundColor: "rgb(19,27,47)", height: "25vh" }}
+      >
+        <CustomTimeline />
+      </Grid>
+    </Grid>
   );
 };
 

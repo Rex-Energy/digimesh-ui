@@ -14,17 +14,20 @@ const Routers = () => {
   const navigate = useNavigate();
 
   const loginstyles =
-    location?.pathname === "/login" || location?.pathname === "/register"
+    location?.pathname === "/login" ||
+    location?.pathname === "/register" ||
+    true
       ? {
           backgroundImage: "url(background.gif)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
+          alignItems: "center",
         }
       : {};
 
   useEffect(() => {
     if (location?.pathname === "/") {
-      navigate("/login");
+      navigate("/dashboard");
     }
   }),
     [location?.pathname];
@@ -33,9 +36,8 @@ const Routers = () => {
       <Box
         sx={{
           ...loginstyles,
-          minHeight: "100%",
+          minHeight: "100vh",
           boxSizing: "border-box",
-          padding: "2rem",
           margin: 0,
         }}
       >

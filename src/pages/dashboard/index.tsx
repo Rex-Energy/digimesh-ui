@@ -1,12 +1,14 @@
 // @ts-nocheck
 
-import { Grid } from "@mui/material";
 import Layout from "./Layout";
+import LineChart from "./components/LineChart";
 
-export default function Dashboard() {
+function App() {
   return (
     <Layout>
-      <Grid>Dashboard</Grid>
+      <LineChart />
     </Layout>
   );
 }
+
+export default App;

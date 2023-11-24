@@ -20,9 +20,9 @@ type Props = {
 const StyledCard = styled(Card)(
   ({ theme }) => `
   box-shadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0, 0, 0, .8)";
-  background: rgba(19,27,47,0.6);
+  background: rgba(19,27,47,0.3);
   border: 1px solid #89a1b7;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
   mix-blend-mode: normal;
   border-radius: 12px;
 `
