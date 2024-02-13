@@ -1,99 +1,121 @@
 // @ts-nocheck
+
 import React from "react";
-import {
-  CssBaseline,
-  Drawer,
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Grid,
-  Button,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { makeStyles } from "@mui/styles";
-import CustomTimeline from "./components/CustomTimeline";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  appBar: {
-    width: "100%",
-    backgroundColor: "#1976D2",
-    color: "#fff",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: "#2196f3",
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(6),
-  },
-  footer: {
-    width: "100%",
-    backgroundColor: "#1976D2",
-    color: "#fff",
-    padding: theme.spacing(2),
-    position: "fixed",
-    bottom: 0,
-  },
-}));
+import { Grid, Collapse, Typography } from "@mui/material";
+import { useState } from "react";
+import { ExpandMore, ExpandLess } from "@mui/icons-material";
+import MyTabs from "./components/Tabs";
 
 const Layout: React.FC = ({ children }) => {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [expanded, setExpanded] = useState({});
+
+  const toggleSubMenu = (index) => {
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [index]: !prevExpanded[index],
+    }));
+  };
 
   const settings = [
     {
       title: "Temprature",
+      key: "1",
       submenu: [],
     },
     {
+      key: "2",
       title: "Humidity",
       submenu: [],
     },
     {
+      key: "3",
       title: "Levels",
-      submenu: ["Level1", "Level2"],
+      submenu: [
+        {
+          key: "31",
+          title: "Level1",
+          submenu: [
+            {
+              key: "311",
+              title: "Sublevel1",
+              submenu: [],
+            },
+          ],
+        },
+        {
+          key: "32",
+          title: "Level2",
+          submenu: [],
+        },
+      ],
     },
     {
+      key: "4",
       title: "Wind",
       submenu: [],
     },
   ];
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  function MenuItemComponent({ setting, index }) {
+    return (
+      <React.Fragment key={index}>
+        <Grid xs={12} style={{ margin: "10px 0px" }}>
+          <Grid
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "#37373d",
+              },
+            }}
+            onClick={() => toggleSubMenu(setting?.key)}
+          >
+            <Grid xs={1}>
+              {setting?.submenu?.length > 0 ? (
+                expanded[setting?.key] ? (
+                  <ExpandLess style={{ color: "#fafafa", fontSize: "16px" }} />
+                ) : (
+                  <ExpandMore style={{ color: "#fafafa", fontSize: "16px" }} />
+                )
+              ) : null}
+            </Grid>
+            <Grid xs={11} style={{ color: "#fafafa" }}>
+              {setting.title}
+            </Grid>
+          </Grid>
+        </Grid>
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+        {setting?.submenu?.length > 0 ? (
+          <Collapse in={expanded[setting?.key]} timeout="auto">
+            {setting?.submenu?.map((tab, subIndex) => (
+              <Grid
+                key={subIndex}
+                xs={12}
+                style={{ margin: "10px 0px", paddingLeft: "16px" }}
+              >
+                <MenuItemComponent setting={tab} index={subIndex} />
+              </Grid>
+            ))}
+          </Collapse>
+        ) : null}
+      </React.Fragment>
+    );
+  }
 
   return (
     <Grid container>
       <Grid
         xs={12}
         style={{
-          backgroundColor: "rgb(19,27,47)",
+          backgroundColor: "#181818",
           height: "10vh",
           display: "flex",
           padding: "0 30px",
           alignItems: "center",
+          border: "1px solid #c1b58c",
         }}
       >
         <Typography
@@ -105,55 +127,63 @@ const Layout: React.FC = ({ children }) => {
       <Grid
         xs={2}
         style={{
-          backgroundColor: "rgb(19,27,47)",
-          height: "80vh",
+          backgroundColor: "#181818",
+          height: "90vh",
           padding: "30px 10px 10px 10px",
+          border: "1px solid #c1b58c",
+          borderTop: 0,
         }}
       >
-        {settings?.map((setting) => {
-          return (
-            <>
-              <Grid xs={12} style={{ margin: "10px 0px" }}>
-                <Button
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  {setting?.title}
-                </Button>
-              </Grid>
-              {setting?.submenu?.map((tab) => {
-                return (
-                  <Grid
-                    xs={12}
-                    style={{ margin: "10px 0px", paddingLeft: "40px" }}
-                  >
-                    <Button
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                      }}
-                    >
-                      {tab}
-                    </Button>
-                  </Grid>
-                );
-              })}
-            </>
-          );
-        })}
+        {settings?.map((setting, index) => (
+          <MenuItemComponent key={index} index={index} setting={setting} />
+        ))}
       </Grid>
-      <Grid xs={10} style={{ height: "80vh", padding: "2rem" }}>
-        {children}
-      </Grid>
+
       <Grid
-        xs={12}
-        style={{ backgroundColor: "rgb(19,27,47)", height: "25vh" }}
+        xs={10}
+        style={{
+          backgroundColor: "#181818",
+          height: "90vh",
+        }}
+        container
       >
-        <CustomTimeline />
+        <Grid
+          xs={3}
+          style={{
+            backgroundColor: "#181818",
+            height: "70vh",
+            padding: "30px 10px 10px 10px",
+            border: "1px solid #c1b58c",
+            borderLeft: 0,
+            borderTop: 0,
+          }}
+        ></Grid>
+        <Grid
+          xs={9}
+          style={{
+            backgroundColor: "#181818",
+            height: "70vh",
+            border: "1px solid #c1b58c",
+            borderLeft: 0,
+            borderTop: 0,
+            overflowY: "auto",
+          }}
+        >
+          {children}
+        </Grid>
+        <Grid
+          xs={12}
+          style={{
+            backgroundColor: "#181818",
+            height: "20vh",
+            padding: "30px 10px 10px 10px",
+            border: "1px solid #c1b58c",
+            borderLeft: 0,
+            borderTop: 0,
+          }}
+        >
+          <MyTabs />
+        </Grid>
       </Grid>
     </Grid>
   );

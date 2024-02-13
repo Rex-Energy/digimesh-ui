@@ -144,15 +144,25 @@ export default function RealTimeChart() {
     ],
   };
 
+  const charts = [1, 2, 3, 4];
+
   return (
-    <Section title="Line Graph" width="100%">
-      <Grid height={"100%"} width={"100%"}>
-        <Grid container style={{ marginTop: "15px" }}>
-          <Grid item xs={12}>
-            <Line options={options} data={chartData} height={"250px"} />
+    <Grid container>
+      {charts?.map((chart) => {
+        return (
+          <Grid xs={6} style={{ padding: "10px" }}>
+            <Section title="Line Graph" width="100%">
+              <Grid height={"100%"} width={"100%"}>
+                <Grid container style={{ marginTop: "15px" }}>
+                  <Grid item xs={12}>
+                    <Line options={options} data={chartData} width={"100%"} />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Section>
           </Grid>
-        </Grid>
-      </Grid>
-    </Section>
+        );
+      })}
+    </Grid>
   );
 }

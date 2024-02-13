@@ -25,24 +25,18 @@ const Routers = () => {
         }
       : {};
 
-  useEffect(() => {
-    if (location?.pathname === "/") {
-      navigate("/dashboard");
-    }
-  }),
-    [location?.pathname];
   return (
     <>
       <Box
         sx={{
           ...loginstyles,
-          minHeight: "100vh",
+          minHeight: "90vh",
           boxSizing: "border-box",
           margin: 0,
         }}
       >
         <Routes>
-          <Route path="/dashboard" Component={Dashboard} />
+          <Route path="/" Component={Dashboard} />
         </Routes>
 
         <Routes>
